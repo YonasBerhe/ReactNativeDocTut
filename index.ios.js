@@ -5,27 +5,30 @@
 'use strict()';
 
 var React = require('react-native');
-var {
-  AppRegistry,
-  StyleSheet,
-  Image,
-  StyleSheet,
-  Text,
-  View,
-} = React;
+var {AppRegistry, StyleSheet, Image, StyleSheet, Text, View} = React;
 
 var MOCKED_MOVIES_DATA = [
-  {title: 'Title', year : '2015', posters {thumbnail: 'http://i.imgur.com'}},
+  {
+    title: 'Title',
+    year: '2015',
+    posters {
+      thumbnail: 'http://i.imgur.com'
+    }
+  }
 ];
 
 var app = React.createClass({
   render: function() {
     return (
       <View style={styles.container}>
-      <Text>{movie.title}</Text>
-      <Text>{movie.year}</Text>
-      // What is a URI?
-      <Image source={{uri:movie.posters.thumbnail}}>
+        <Image source={{
+        uri: movie. posters. thumbnail
+        }} style={styles.thumbnail}/>
+
+        <View style={styles.rightContainer}>
+          <Text style={styles.title}>{movie.title}</Text>
+          <Text style={styles.year}>{movie.year}</Text>
+        </View>
       </View>
     );
   }
@@ -34,20 +37,28 @@ var app = React.createClass({
 var styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#F5FCFF'
   },
-  welcome: {
+  // learn more about flex box here: https://css-tricks.com/snippets/css/a-guide-to-flexbox/
+  rightContainer: {
+    flex: 1,
+    backgroundColor: black,
+  },
+  title: {
     fontSize: 20,
+    marginBottom: 8,
     textAlign: 'center',
-    margin: 10,
   },
-  instructions: {
+  thumbnail: {
+    width: 53,
+    height: 81
+  },
+  year: {
     textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+  }
 });
 
 AppRegistry.registerComponent('app', () => app);
