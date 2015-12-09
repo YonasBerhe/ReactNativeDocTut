@@ -7,23 +7,48 @@
 var React = require('react-native');
 var {AppRegistry, StyleSheet, Image, StyleSheet, Text, View} = React;
 
+var REQUEST_URL = 'https://raw.githubusercontent.com/facebook/react-native/master/docs/MoviesExample.json';
+
 var MOCKED_MOVIES_DATA = [
   {
     title: 'Title',
     year: '2015',
-    posters {
+    posters : {
       thumbnail: 'http://i.imgur.com'
     }
   }
 ];
 
 var app = React.createClass({
+  //checking if movie json is their.
+getInitialState: function () {
+  return {
+    movies: null,
+  };
+},
+componentDidMount: function () {
+  this.fetchData();
+},
+
+//fetchData to function to get data from REQUEST_URL
+fetchData: function () {
+  fetch(REQUEST_URL)
+  .then((response) => response.json())
+  .then((responseData) => {
+    this.setState({
+      //data about what is being recived
+      movies: responseData.movies,
+    });
+  })
+  .done();
+}
+
   render: function() {
     return (
       <View style={styles.container}>
         <Image source={{
         uri: movie. posters. thumbnail
-        }} style={styles.thumbnail}/>
+      }}style={styles.thumbnail}/>
 
         <View style={styles.rightContainer}>
           <Text style={styles.title}>{movie.title}</Text>
