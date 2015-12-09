@@ -8,24 +8,24 @@ var React = require('react-native');
 var {
   AppRegistry,
   StyleSheet,
+  Image,
+  StyleSheet,
   Text,
   View,
 } = React;
+
+var MOCKED_MOVIES_DATA = [
+  {title: 'Title', year : '2015', posters {thumbnail: 'http://i.imgur.com'}},
+];
 
 var app = React.createClass({
   render: function() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
+      <Text>{movie.title}</Text>
+      <Text>{movie.year}</Text>
+      // What is a URI?
+      <Image source={{uri:movie.posters.thumbnail}}>
       </View>
     );
   }
