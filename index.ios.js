@@ -5,72 +5,63 @@
 'use strict()';
 
 var React = require('react-native');
-var {AppRegistry, StyleSheet, Image, StyleSheet, Text, View} = React;
+var {AppRegistry, StyleSheet, Image, StyleSheet, Text, View, ListView} = React;
 
 var REQUEST_URL = 'https://raw.githubusercontent.com/facebook/react-native/master/docs/MoviesExample.json';
 
-var MOCKED_MOVIES_DATA = [
-  {
-    title: 'Title',
-    year: '2015',
-    posters : {
-      thumbnail: 'http://i.imgur.com'
-    }
-  }
-];
+// var MOCKED_MOVIES_DATA = [
+//   {
+//     title: 'Title',
+//     year: '2015',
+//     posters : {
+//       thumbnail: 'http://i.imgur.com/U'
+//     }
+//   }
+// ];
 
 var app = React.createClass({
   //checking if movie json is their.
-getInitialState: function () {
-  return {
-    movies: null,
-  };
-},
-componentDidMount: function () {
-  this.fetchData();
-},
+  getInitialState: function() {
+    return {movies: null};
+  },
+  componentDidMount: function() {
+    this.fetchData();
+  },
 
-//fetchData to function to get data from REQUEST_URL
-fetchData: function () {
-  fetch(REQUEST_URL)
-  .then((response) => response.json())
-  .then((responseData) => {
-    this.setState({
-      //data about what is being recived
-      movies: responseData.movies,
-    });
-  })
-  .done();
-},
+  //fetchData to function to get data from REQUEST_URL
+  fetchData: function() {
+    fetch(REQUEST_URL).then((response) => response.json()).then((responseData) => {
+      this.setState({
+        //data about what is being recived
+        movies: responseData.movies
+      });
+    }).done();
+  },
 
+  render: function() {
+    if (!this.state.movies) {return this.renderLoadingView();}
+    // 1 index in the array this.state.movies[1] to modify the movie that is returned
+    var movie = this.state.movies[0];
+    return this.renderMovie(movie);
 
-render: function() {
-  if (!this.state.movies) {
-    return this.renderLoadingView();
-  }
+  },
 
-  var movie = this.state.movies[0];
-  return this.renderMovie(movie);
-
-},
-
-
-renderLoadingView: function() {
-  return (
-    <View style={styles.container}>
-      <Text>
-        Loading Movies...
-      </Text>
-    </View>
-  );
-},
-
-  renderMovie: function (movie) {
+  renderLoadingView: function() {
     return (
       <View style={styles.container}>
-        <Image source={{
-        uri: movie.posters.thumbnail
-      }}style={styles.thumbnail}/>
+        <Text>
+          Loading Movies...
+        </Text>
+      </View>
+    );
+  },
+
+  renderMovie: function(movie) {
+    return (
+      <View style={styles.container}>
+        <Image style={styles.thumbnail} source={{
+        uri: movie. posters. thumbnail
+        }}/>
 
         <View style={styles.rightContainer}>
           <Text style={styles.title}>{movie.title}</Text>
@@ -82,6 +73,7 @@ renderLoadingView: function() {
 });
 
 var styles = StyleSheet.create({
+
   container: {
     flex: 1,
     flexDirection: 'row',
@@ -91,20 +83,22 @@ var styles = StyleSheet.create({
   },
   // learn more about flex box here: https://css-tricks.com/snippets/css/a-guide-to-flexbox/
   rightContainer: {
-    flex: 1,
-    // backgroundColor: black,
+    flex: 1
   },
   title: {
     fontSize: 20,
     marginBottom: 8,
-    textAlign: 'center',
+    textAlign: 'center'
+  },
+  listView: {
+
   },
   thumbnail: {
     width: 53,
     height: 81
   },
   year: {
-    textAlign: 'center',
+    textAlign: 'center'
   }
 });
 
