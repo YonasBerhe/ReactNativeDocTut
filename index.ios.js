@@ -21,31 +21,43 @@ var REQUEST_URL = 'https://raw.githubusercontent.com/facebook/react-native/maste
 
 var app = React.createClass({
   //checking if movie json is their.
+  // getInitialState: function() {
+  //   return {movies: null};
+  // },
+
   getInitialState: function() {
-    return {movies: null};
+    return {
+      dataSource: new ListView.DataSource({
+        // !== a function checking if row1 and row2 are equal value or equal value type.
+        rowHasChanged: (row1, row2) => row1 !== row2,
+      }),
+      loaded: false
+    };
   },
+
   componentDidMount: function() {
     this.fetchData();
   },
-
   //fetchData to function to get data from REQUEST_URL
   fetchData: function() {
-    fetch(REQUEST_URL).then((response) => response.json()).then((responseData) => {
+    fetch(REQUEST_URL)
+    .then((response) => response.json())
+    .then((responseData) => {
       this.setState({
         //data about what is being recived
-        movies: responseData.movies
+        dataSource: this.state.dataSource.cloneWithRows(responseData.movies),
+        loaded: true
       });
     }).done();
   },
 
   render: function() {
-    if (!this.state.movies) {return this.renderLoadingView();}
-    // 1 index in the array this.state.movies[1] to modify the movie that is returned
-    var movie = this.state.movies[0];
-    return this.renderMovie(movie);
+    if (!this.state.loaded) {return this.renderLoadingView();}
 
+    return (
+      <ListView dataSource={this.state.dataSource} renderRow={this.renderMovie} style={styles.listView}/>
+    );
   },
-
   renderLoadingView: function() {
     return (
       <View style={styles.container}>
@@ -71,9 +83,7 @@ var app = React.createClass({
     );
   }
 });
-
 var styles = StyleSheet.create({
-
   container: {
     flex: 1,
     flexDirection: 'row',
@@ -91,7 +101,8 @@ var styles = StyleSheet.create({
     textAlign: 'center'
   },
   listView: {
-
+    paddingTop: 20,
+    backgroundColor: '#F5FCFF'
   },
   thumbnail: {
     width: 53,
