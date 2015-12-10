@@ -2,6 +2,7 @@ Link to tutorial: https://facebook.github.io/react-native/docs/tutorial.html#con
 
 
 Installation for MacOS
+
 1. clone this repo
 
 2. cd in to it
