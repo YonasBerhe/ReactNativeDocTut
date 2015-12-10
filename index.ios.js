@@ -41,13 +41,35 @@ fetchData: function () {
     });
   })
   .done();
-}
+},
 
-  render: function() {
+
+render: function() {
+  if (!this.state.movies) {
+    return this.renderLoadingView();
+  }
+
+  var movie = this.state.movies[0];
+  return this.renderMovie(movie);
+
+},
+
+
+renderLoadingView: function() {
+  return (
+    <View style={styles.container}>
+      <Text>
+        Loading Movies...
+      </Text>
+    </View>
+  );
+},
+
+  renderMovie: function (movie) {
     return (
       <View style={styles.container}>
         <Image source={{
-        uri: movie. posters. thumbnail
+        uri: movie.posters.thumbnail
       }}style={styles.thumbnail}/>
 
         <View style={styles.rightContainer}>
@@ -70,7 +92,7 @@ var styles = StyleSheet.create({
   // learn more about flex box here: https://css-tricks.com/snippets/css/a-guide-to-flexbox/
   rightContainer: {
     flex: 1,
-    backgroundColor: black,
+    // backgroundColor: black,
   },
   title: {
     fontSize: 20,
